@@ -1,0 +1,135 @@
+{% extends 'main/meta_base.html' %}
+
+{% load static %}
+{% static "img" as baseUrl %}
+{% static "category_img" as baseUrl %}
+{% block content %}
+
+
+
+{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> {% endcomment %}
+
+
+
+
+
+<section class="bg-body">
+  <div class="container">
+    <div class="row justify-content-center">
+      {% for data in blogdata%}
+      <div class="col-xl-9 col-lg-10">
+        <div class="section">
+          <p class="mb-4 text-muted"> 03 min reading in <span class="mx-2">—</span>
+            <a class="text-link " href="{% url 'index' %}category/{{data.category.slug}}">{{ data.category }}</a>
+          </p>
+          <h1 class="mb-3">{{data.title}}</h1>
+          
+          {% comment %}  {% endcomment %}
+
+
+{% comment %}  {% endcomment %}
+
+
+          <p class="mb-4 pb-1">{{data.snipit}}</p>
+          <div class="post-author d-flex">
+            <div class="flex-shrink-0">
+              <a href="{% url 'author' %}/{{data.author.id}}" class="is-hoverable" title="Read all posts of - {{ data.author}}">
+                <img loading="lazy" class="rounded-circle w-auto" src="{{data.author.userprofileinfo.profile_pic.url}}" alt="{{ data.author}}" width="50" height="50">
+              </a>
+            </div>
+            <div class="flex-grow-1 ms-3"> by <a class="text-link" href="{% url 'author' %}/{{data.author.id}}" title="Read all posts by - {{ data.author}}">{{ data.author}}</a>
+              <p class="mb-0 lh-base">{{data.created}}</p>
+            </div>
+          </div>
+        </div>
+      </div> 
+      <div class="col-lg-12">
+        <img loading="lazy" class="w-100 h-auto" src="{{data.img.url}}" alt="Can You Build Muscle When You’re Older?" width="1020" height="660">
+      </div>
+      <div class="col-xl-9 col-lg-10">
+        <div class="section">
+          <div class="content">
+            <p>{{data.description|safe}}</p>
+            
+          </div>
+          <div class="d-block d-sm-flex justify-content-between align-items-center mt-5 pt-3">
+            <ul class="taxonomy-lists list-unstyled list-inline">
+              <li class="list-inline-item d-block mb-3">Tags: </li>
+              <li class="list-inline-item">
+                <a class="bg-white" href="tag-single.html">Fitness</a>
+              </li>
+              <li class="list-inline-item">
+                <a class="bg-white" href="tag-single.html">Motivation</a>
+              </li>
+            </ul>
+            <ul class="list-inline social-share text-start text-sm-end mt-4 mt-sm-0">
+              <li class="list-inline-item d-block mb-2 text-start">Share: </li>
+              <li class="list-inline-item lead text-center is-hoverable">
+                <i class="ti ti-brand-twitter"></i>
+              </li>
+              <li class="list-inline-item lead text-center is-hoverable ms-3">
+                <i class="ti ti-brand-facebook"></i>
+              </li>
+              <li class="list-inline-item lead text-center is-hoverable ms-3">
+                <i class="ti ti-brand-linkedin"></i>
+              </li>
+              <li class="list-inline-item lead text-center is-hoverable ms-3">
+                <i class="ti ti-brand-reddit"></i>
+              </li>
+              <li class="list-inline-item lead text-center is-hoverable ms-3">
+                <i class="ti ti-brand-pinterest"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    
+    <div class="section">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="section-title text-center">
+            <h2 class="h3 mb-0 title">Related Posts</h2>
+          </div>
+          <div class="row gy-5 gx-4 g-xl-5">
+            {% for b in blog%}
+            <div class="col-lg-4 col-md-6">
+              <article class="bg-white d-flex flex-column h-100">
+                <div class="p-4 pb-0">
+                  <ul class="post-meta list-inline mb-3">
+                    <li class="list-inline-item">
+                      <i class="ti ti-calendar-event me-1"></i>{{b.created}}
+                    </li>
+                    <li class="list-inline-item">•</li>
+                    <li class="list-inline-item">
+                      <i class="ti ti-clock-2 me-1"></i>02 min read
+                    </li>
+                  </ul>
+                  <div class="position-relative">
+                    <h3 class="h4 post-title mb-2 line-clamp clamp-2">
+                      <a class="text-link stretched-link" href="{% url 'index' %}blog/{{b.blog_url}}" title="Read more about - {{b.title}}">{{b.title}}</a>
+                    </h3>
+                    <p class="mb-0 line-clamp clamp-2">{{b.snipit}} </p>
+                  </div>
+                </div>
+                <div class="post-author mt-auto p-4 pt-3">
+                  <a href="{% url 'author' %}/{{b.author.id}}" class="is-hoverable" title="Read all posts of - {{b.author}}">
+                    <img loading="lazy" class="w-auto rounded-circle me-2" src="{{b.author.userprofileinfo.profile_pic.url}}" alt="{{b.author}}" width="26" height="26">
+                  </a> by <a href="{% url 'author' %}/{{b.author.id}}" class="text-link" title="Read all posts of - {{b.author}}">{{b.author}}</a>
+                </div>
+              </article>
+            </div>
+            {% endfor %}
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

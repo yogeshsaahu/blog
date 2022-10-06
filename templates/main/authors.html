@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+{% static "img" as baseUrl %}
+{% static "category_img" as baseUrl %}
+{% block content %}
+
+
+
+<!-- start of authors -->
+<section class="section pt-0">
+  <div class="container">
+    <div class="row gy-5 justify-content-center">
+      <!-- author item -->
+      {% for a in author %}
+      <div class="col-xl-9 col-lg-10">
+        <div class="bg-white p-4">
+          <div class="d-sm-flex">
+            <div class="flex-shrink-0">
+              <img loading="lazy" class="img-fluid me-4 me-md-5" src="{{a.profile_pic.url}}" alt="{{ a.user.username}}" width="124" height="124">
+            </div>
+            <div class="flex-grow-1 mt-3 mt-sm-0">
+              <h4 class="text-dark mb-1">{{ a.user.username}}</h4>
+              <p class="mb-2">{{ a.skills }}</p>
+              <span>{{ a.bio|truncatewords:15 }}</span>
+              <a href="{% url 'author'%}/{{ a.user.id}}" class="ms-2 text-link active">Read More <i class="ti ti-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+          <div class="opacity-50 pt-2 pb-1">
+            <hr class="text-dark my-4">
+          </div>
+          <div class="section-title mb-0">
+            <p class="h4 title mb-4">Recent Posts</p>
+          </div>
+          <div class="row gy-5 gx-md-5 align-items-center">
+            <div class="col-lg-4 col-md-6">
+              <article class="h-100 position-relative">
+                <h3 class="h5 mb-2 mb-md-3 line-clamp clamp-2">
+                  <a class="text-link stretched-link" href="blog-single.html" title="Read more about - The nine-to-five Is Dead. Here’s What to Replace It With">The nine-to-five Is Dead. Here’s What to Replace It With</a>
+                </h3>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <i class="ti ti-calendar-event me-1"></i>28th Jun
+                  </li>
+                  <li class="list-inline-item">•</li>
+                  <li class="list-inline-item">
+                    <i class="ti ti-clock-2 me-1"></i>02 min
+                  </li>
+                </ul>
+              </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <article class="h-100 position-relative">
+                <h3 class="h5 mb-2 mb-md-3 line-clamp clamp-2">
+                  <a class="text-link stretched-link" href="blog-single.html" title="Read more about - There Are Zero Bridges Across The Amazon. Here Is Why">There Are Zero Bridges Across The Amazon. Here Is Why</a>
+                </h3>
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <i class="ti ti-calendar-event me-1"></i>9th Apr
+                  </li>
+                  <li class="list-inline-item">•</li>
+                  <li class="list-inline-item">
+                    <i class="ti ti-clock-2 me-1"></i>03 min
+                  </li>
+                </ul>
+              </article>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="d-flex align-items-center border position-relative p-3">
+                <div class="flex-grow-1">
+                  <p class="mb-2 lh-1">Read all Posts of</p>
+                  <p class="h5 lh-1 mb-0">
+                    <a class="text-link stretched-link" href="author-single.html">Alexander Hipp</a>
+                  </p>
+                </div>
+                <div class="flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <line x1="17" y1="7" x2="7" y2="17"></line>
+                    <polyline points="8 7 17 7 17 16"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+    </div>
+  </div>
+</section>
+<!-- end of authors -->
+
+{% endblock%}

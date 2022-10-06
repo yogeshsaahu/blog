@@ -1,0 +1,434 @@
+{% extends 'main/base.html' %} {% load static %} {% load widget_tweaks %} {%
+static "profile_pic" as baseUrl %} {% block content %}
+
+<!-- ##### Header Area End ##### -->
+
+{% for message in messages %} {%endfor%}
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+
+<section class="section pb-0">
+  <div class="container">
+    <div class="container">
+      <div class="main-body">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                {% comment %} this is profile {% endcomment %}
+                <div class="d-flex flex-column align-items-center text-center">
+                  <img
+                    src="{{user.userprofileinfo.profile_pic.url}}"
+                    alt="{{ user.username}}"
+                    class="rounded-circle p-1 bg-primary"
+                    width="110"
+                  />
+                  <div class="mt-3">
+                    <h4>{{ user.username}}</h4>
+                    <p class="text-secondary mb-1">
+                      {{ user.userprofileinfo.skills}}
+                    </p>
+                    <p class="text-muted font-size-sm">
+                      {{ user.userprofileinfo.bio}}
+                    </p>
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#update"
+                      aria-expanded="false"
+                      aria-controls="update"
+                    >
+                      update profile
+                    </button>
+
+                    <div class="collapse" id="update">
+                      <div class="card card-body">
+                        <div class="col-lg-6 order-1 order-lg-0">
+                          <form
+                            class="row gy-4"
+                            action=""
+                            method="post"
+                            enctype="multipart/form-data"
+                          >
+                            {% csrf_token %}
+
+                            <div class="col-md-12">
+                              {% render_field form.skills class="form-control" placeholder="skills" %}
+                            </div>
+                            <div class="col-md-12">
+                              {% render_field form.bio class="form-control" placeholder="bio" %}
+                            </div>
+                            <div class="col-md-12">
+                              {% render_field form.profile_pic class="form-control" %}
+                            </div>
+
+                            <div class="col-12">
+                              <button
+                                type="submit"
+                                class="btn btn-light bg-white"
+                                aria-label="Send Message"
+                              >
+                                Update <i class="ti ti-brand-telegram ms-1"></i>
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% comment %} end of profile {% endcomment %}
+                <hr class="my-4" />
+
+                
+                {% comment %}
+                <ul class="list-group list-group-flush">
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                  >
+                    <h6 class="mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-globe me-2 icon-inline"
+                      >
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                        ></path></svg
+                      >Website
+                    </h6>
+                    <span class="text-secondary">https://bootdey.com</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                  >
+                    <h6 class="mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-github me-2 icon-inline"
+                      >
+                        <path
+                          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                        ></path></svg
+                      >Github
+                    </h6>
+                    <span class="text-secondary">bootdey</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                  >
+                    <h6 class="mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-twitter me-2 icon-inline text-info"
+                      >
+                        <path
+                          d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                        ></path></svg
+                      >Twitter
+                    </h6>
+                    <span class="text-secondary">@bootdey</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                  >
+                    <h6 class="mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-instagram me-2 icon-inline text-danger"
+                      >
+                        <rect
+                          x="2"
+                          y="2"
+                          width="20"
+                          height="20"
+                          rx="5"
+                          ry="5"
+                        ></rect>
+                        <path
+                          d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                        ></path>
+                        <line
+                          x1="17.5"
+                          y1="6.5"
+                          x2="17.51"
+                          y2="6.5"
+                        ></line></svg
+                      >Instagram
+                    </h6>
+                    <span class="text-secondary">bootdey</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                  >
+                    <h6 class="mb-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-facebook me-2 icon-inline text-primary"
+                      >
+                        <path
+                          d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                        ></path></svg
+                      >Facebook
+                    </h6>
+                    <span class="text-secondary">bootdey</span>
+                  </li>
+                </ul>
+                {% endcomment %}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="card">
+                  <div class="card-body">
+
+                    <div class="padding">
+                      <div class="col-lg-12">
+                          <div class="card"> <img class="" src="https://i.imgur.com/a9sHoeY.jpg" alt="Card image cap">
+                              <div class="card-img-overlay" style="height:110px;">
+                                  <h3 class="card-title text-white m-b-0 dl">Welcome {{user.username}}</h3> <small class="card-text text-white font-light"> Last login -{{user.last_login}}</small>
+                              </div>
+                              <div class="card-body weather-small">
+                                  <div class="row">
+                                      <div class="col-8 b-r align-self-center">
+                                          <div class="d-flex">
+                                              <div class="display-6 text-info"><i class="mdi mdi-weather-pouring"></i></div>
+                                              <div class="m-l-20">
+                                                  <h1 class="font-light text-info m-b-0">{{count}}<sup></sup></h1> <small>your blogs</small>
+                                                  
+                                              </div>
+                                              
+                                          </div>
+                                          
+                                      </div>
+                                      <div class="col-4 text-center">
+                                          <h1 class="font-light m-b-0"> 
+                                            
+                                            <button
+                                            class="btn btn-primary"
+                                            type="button"
+                                            data-toggle="collapse"
+                                            data-target="#bloglist1"
+                                            aria-expanded="false"
+                                            aria-controls="bloglist1"
+                                          >
+                                            blog list
+                                          </button>
+                                          <br>
+                                          <a href="{% url 'index'%}add_blog" class="btn btn-primary " role="button" aria-pressed="true">add blog</a>
+                                        </h1> 
+                                          
+                                      </div>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                    
+                  </div>
+                </div> 
+
+                {% comment %} <div class="card">
+                  <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">
+                      Project Status
+                    </h5>
+                    <p>Web Design</p>
+                    <div class="progress mb-3" style="height: 5px">
+                      <div
+                        class="progress-bar bg-primary"
+                        role="progressbar"
+                        style="width: 80%"
+                        aria-valuenow="80"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p>Website Markup</p>
+                    <div class="progress mb-3" style="height: 5px">
+                      <div
+                        class="progress-bar bg-danger"
+                        role="progressbar"
+                        style="width: 72%"
+                        aria-valuenow="72"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p>One Page</p>
+                    <div class="progress mb-3" style="height: 5px">
+                      <div
+                        class="progress-bar bg-success"
+                        role="progressbar"
+                        style="width: 89%"
+                        aria-valuenow="89"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p>Mobile Template</p>
+                    <div class="progress mb-3" style="height: 5px">
+                      <div
+                        class="progress-bar bg-warning"
+                        role="progressbar"
+                        style="width: 55%"
+                        aria-valuenow="55"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <p>Backend API</p>
+                    <div class="progress" style="height: 5px">
+                      <div
+                        class="progress-bar bg-info"
+                        role="progressbar"
+                        style="width: 66%"
+                        aria-valuenow="66"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                  </div>
+                </div> {% endcomment %}
+
+
+                
+              </div>
+            </div>
+          </div>
+
+          
+
+          <div class="clo-lg-12">
+            <div class="card">
+              <div class="card-body">
+               
+                <div class="collapse" id="bloglist1">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Description</th>
+                          <th>Date</th>
+                          <th>image</th>
+                          <th>blog url</th>
+                          <th>update</th>
+                          <th>delete</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data in instance%}
+                        <tr>
+                          <td>{{data.title|truncatewords:2}}</td>
+                          <td>{{data.snipit | truncatewords:2}}</td>
+                          <td>{{data.created}}</td>
+                          <td>
+                            <img
+                              src="{{data.img.url}}"
+                              alt=""
+                              style="width: 50%"
+                            />
+                          </td>
+                          <td>{{data.blog_url}}</td>
+
+                          <td>
+                            <a href="add_blog/{{data.id}}" class="btn btn-dark"
+                              >update</a
+                            >
+                          </td>
+
+                          <!-- Button trigger modal -->
+
+                          <td>
+                            <a
+                              href="deleteblog/{{data.id}}"
+                              class="btn btn-danger"
+                              >Delete</a
+                            >
+                          </td>
+                        </tr>
+
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br />
+<!-- end of authors -->
+
+{% endblock %}

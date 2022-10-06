@@ -1,0 +1,401 @@
+{% comment %} {% static "img" as baseUrl %} {% endcomment %}
+{% load static %}
+
+{% static "img" as baseUrl %}
+<!DOCTYPE html>
+<html lang="en-US">
+
+
+ 
+<head>
+  <meta charset="utf-8">
+  <title>Tushi - Minimal Blog HTML Template</title>
+
+  <meta name="author" content="Platol">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="description" content="Minimal Blog HTML Template">
+
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{% static 'assets/images/favicon.png' %}">
+
+  <!-- CSS Plugins and Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap">
+  <link rel="stylesheet" href=" {% static 'plugins/tabler-icons/tabler-icons.min.css' %}">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href=" {% static 'assets/css/style.css' %}">
+  
+
+
+  
+
+</head>
+<body>
+    <div class="header-height-fix"></div>
+<!-- start header-nav -->
+<header class="header-nav">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-expand-lg navbar-light p-0">
+          <button class="navbar-toggler d-inline-flex d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navHeader" aria-controls="navHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="menu-open" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <line x1="4" y1="6" x2="20" y2="6"></line>
+              <line x1="4" y1="12" x2="14" y2="12"></line>
+              <line x1="4" y1="18" x2="18" y2="18"></line>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="menu-close" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <a class="navbar-brand d-flex mb-0 me-0" href="/" title="">
+            <img loading="lazy" class="img-fluid" width="130" height="31" src="{% static 'assets/images/logo.png' %}" alt="">
+          </a>
+          <div class="d-block d-lg-none">
+            <button class="search-toggle" data-toggle="search" aria-label="Search Toggle">
+              <svg width="28" height="28" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="square" stroke-linejoin="square" />
+                <path d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z" stroke="currentColor" stroke-linecap="square" stroke-linejoin="square" />
+              </svg>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navHeader">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+              </li>
+
+              {% if user.is_authenticated %}
+              <li class="nav-item ">hello {{ user.first_name}}</li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'profile' %}">profile</a>
+              </li>
+
+              {% else %}  
+                         
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+              {% comment %} <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="authors.html">Authors</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="author-single.html">Author Single</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="tags.html">Tags</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="tag-single.html">Tag Single</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="categories.html">Categories</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="category-single.html">Category Single</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="elements.html">Elements</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="privacy.html">Privacy Policy</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="404.html">Page Not Found</a>
+                  </li>
+                </ul>
+              </li> {% endcomment %}
+            </ul>
+            <div class="navbar-right d-none d-lg-block">
+              
+              <button class="search-toggle ms-2" data-toggle="search"  aria-label="Search Toggle">
+                <svg width="30" height="30" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.5 15.5L19 19" stroke="currentColor" stroke-linecap="square" stroke-linejoin="square" />
+                  <path d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z" stroke="currentColor" stroke-linecap="square" stroke-linejoin="square" />
+                </svg>
+              </button>
+              
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- end header-nav -->
+
+<!-- start search block -->
+
+<div class="search-overlay"  data-toggle="search-close"></div>
+<div class="search-block  overflow-auto bg-body">
+  <div data-toggle="search-close" >
+    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </div>
+  
+  
+  <div class="is-hidden"><form id="task-form" method="get" >
+
+
+
+
+
+
+{% comment %} <input type="text" id="task"  name="task" placeholder="Type to search blog.." aria-label="search-query"> {% endcomment %}
+  </form></div>  
+  
+
+
+
+  <div class="mt-4 pt-2 is-hidden popular-topics">
+    <div class="post-meta">
+      <div class="section-title mb-3">
+        <p class="title h4 mb-0">Popular topics</p>
+      </div>
+      <ul class="taxonomy-lists list-inline">
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Lifestyle</a>
+        </li>
+        
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Motivation</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">AI</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Art</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Business</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Culture</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Earth</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Fitness</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Futurism</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Health</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Innovation</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Job</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Modern Art</a>
+        </li>
+        <li class="list-inline-item me-2 mt-2">
+          <a class="bg-white" href="tag-single.html">Nature</a>
+        </li>
+        <li class="list-inline-item mt-2">
+          <a class="border-0 pe-0 d-inline-flex align-items-center" href="tags.html"> All Topice <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <polyline points="9 6 15 12 9 18"></polyline>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+<br>
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"
+/>
+<div id="autocomplete" class="autocomplete">
+  <input class="autocomplete-input" placeholder="Search blog" name="address" />
+  <ul class="autocomplete-result-list"></ul>
+</div>
+<script>
+  {% comment %} var searchdata =  $("input[name=address]").val()
+   alert(searchdata) {% endcomment %}
+  new Autocomplete('#autocomplete', {
+   
+  search : input =>{
+    
+    console.log(input)
+    
+    const url = "/search/?address="+input
+    
+    return new Promise(resolve =>{
+      fetch(url)
+      .then(response => response.json())
+       .then(data => {
+         console.log(data)
+        
+         resolve(data.data)
+      })
+    })
+  },
+  onSubmit : result => {
+    window.open('/blog/'+result)
+  }        
+
+})
+</script
+
+
+  <div class="mt-4 pt-2 is-hidden recent-posts">
+    <div class="post-meta">
+      
+      <div class="row gy-4">
+
+     
+     
+
+
+
+     
+        
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end search block -->
+
+    {% block content %} {% endblock %}
+
+<!-- start newsletter -->
+<section class="line-bg bg-white">
+    <div class="newsletter-block border-bottom" style="
+    background-image: linear-gradient(to right, white , yellow);
+">
+      <div class="container">
+        <div class="row gy-5 align-items-center justify-content-center text-center text-md-start">
+          <div class="col-xl-5 col-lg-5 col-md-6 col-sm-10">
+            <div class="pe-0 pe-xl-4">
+              <h2 class="mb-3 lh-sm">Subscribe to our monthly newsletter</h2>
+              <p class="mb-0">Stay up-to-date about latest tech and new world. Unsubscribe at anytime!</p>
+            </div>
+          </div>
+          <div class="col-xl-4 col-lg-5 col-md-6">
+            <div class="ps-0 ps-xl-4">
+              <div id="mc_embed_signup">
+                <form action="https://gmail.us20.list-manage.com/subscribe/post?u=92641572a6c6ec43da15feed0&amp;amp;id=d28bb2454f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+                  <div id="mc_embed_signup_scroll" class="input-group">
+                    <input type="text" value="" name="NAME" class="form-control w-100" id="mce-NAME" placeholder="Full Name" aria-label="Name" autocomplete="new-name">
+                    <input type="email" value="" name="EMAIL" class="form-control w-100 required email" id="mce-EMAIL" placeholder="Your email address *" aria-label="Subscription" autocomplete="new-email" required>
+                    <div id="mce-responses" class="clear">
+                      <div class="response" id="mce-error-response" style="display:none"></div>
+                      <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                      <input type="text" name="b_92641572a6c6ec43da15feed0_d28bb2454f" tabindex="-1" value="">
+                    </div>
+                    <div class="input-group-append w-100">
+                      <button type="submit" name="subscribe" id="mc-embedded-subscribe" class="input-group-text w-100 mb-0" aria-label="Subscription Button"> Subscribe Now <i class="ti ti-arrow-up-right ms-auto"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end newsletter -->
+  
+  <!-- start footer -->
+  <footer class="bg-white">
+    <div class="container">
+      <div class="row gy-3">
+        <div class="col-lg-4 text-center text-lg-start">
+          <ul class="list-inline footer-menu">
+            <li class="list-inline-item m-0">
+              <a class="text-link" href="#!"><i class="ti ti-rss"></i> RSS </a>
+            </li>
+            <li class="list-inline-item m-0">
+              <a class="text-link" href="#!">SiteMap</a>
+            </li>
+            <li class="list-inline-item m-0">
+              <a class="text-link" href="#"> Privacy </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-lg-4 text-center">
+          <p class="copyright-text mb-0">&copy;2022 Team Annex. All rights reserved.</p>
+        </div>
+        <div class="col-lg-4 text-center text-lg-end">
+          <ul class="list-inline social-links">
+            <li class="list-inline-item  lead text-center">
+              <a class="is-hoverable" target="_blank" href="#" title="Twitter">
+                <i class="ti ti-brand-twitter"></i>
+              </a>
+            </li>
+            <li class="list-inline-item ms-3 lead text-center">
+              <a class="is-hoverable" target="_blank" href="#" title="LinkedIn">
+                <i class="ti ti-brand-linkedin"></i>
+              </a>
+            </li>
+            <li class="list-inline-item ms-3 lead text-center">
+              <a class="is-hoverable" target="_blank" href="#" title="Instagram">
+                <i class="ti ti-brand-instagram"></i>
+              </a>
+            </li>
+            <li class="list-inline-item ms-3 lead text-center">
+              <a class="is-hoverable" target="_blank" href="#" title="Facebook">
+                <i class="ti ti-brand-facebook"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- scroll-to-top -->
+  <button class="scroll-to-top">
+    <i class="ti ti-arrow-up"></i>
+  </button>
+  <!-- end footer -->
+  
+  <!-- JS Plugins -->
+  <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}"></script>
+  <script src="{% static 'plugins/lightense/lightense.min.js' %}"></script>
+  
+  <!-- Main Script -->
+  <script src="{% static 'assets/js/script.js' %}"></script>
+
+  </body>
+  </html>
