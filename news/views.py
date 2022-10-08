@@ -154,7 +154,7 @@ def update(request, id):
     return render(request, 'main/add_blog.html', {'form': form})
 
 
-
+""" this search bar based on api  """
 def search(request):
     address = request.GET.get('address')
 
@@ -214,5 +214,8 @@ def subscribe(request):
             return redirect('index')
 
 
+"""this is for 404 page """
+def error_404_view(request, exception):
+    return render(request, 'main/404.html')
 
 

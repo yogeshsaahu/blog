@@ -30,4 +30,6 @@ urlpatterns = [
 
 ]
 
+handler404 = 'news.views.error_404_view'
+
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
