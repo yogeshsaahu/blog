@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 # Create your models here.
 from PIL import Image
+from django.urls import reverse
 from gtts import gTTS
 from bs4 import BeautifulSoup
 
@@ -29,7 +30,6 @@ class BlogCategory(models.Model):
             if not self.id:
                   # Newly created object, so set slug
                   self.slug = slugify(self.category)
-
                   super(BlogCategory, self).save(*args, **kwargs)
 
       def __str__(self):
@@ -69,26 +69,9 @@ class Blog(models.Model):
                   img.thumbnail(output_size)
                   img.save(self.img.path)
 
-      # def music(self, *args, **kwargs):
-      #
-      #       title = self.title
-      #       des = self.description
-      #       des = BeautifulSoup(des)
-      #       t = des.getText()
-      #
-      #       mytexts = (f' blog title is {title} and details is {t}')
-      #
-      #       language = 'en'
-      #       myobj = gTTS(text=mytexts, lang=language, slow=False)
-      #       music = myobj.save(f'media/audio/{title}.mp3')
-      #       print(music)
-      #
-      #       mp = (f'media/audio/{title}.mp3')
-      #
-      #       d = self.music = mp
-      #       print(d)
-      #
-      #       super(Blog, self).save(*args, **kwargs)
+      def get_absolute_url(self):
+            # return "/p/%i/" % self.id
+            return reverse("Blogdetails", kwargs={"blog_url": str(self.blog_url)})
 
 
 

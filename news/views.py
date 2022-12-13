@@ -193,7 +193,7 @@ def author(request):
     return render(request, 'main/authors.html', {'author': author})
 
 def author_details(request, id):
-    author_data  = MyModel1.objects.filter(id=id)
+    author_data = MyModel1.objects.filter(id=id)
     return render(request, 'main/author-single.html', {'author_data': author_data})
 
 

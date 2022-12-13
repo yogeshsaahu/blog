@@ -63,53 +63,82 @@
         <div class="col-xl-9 col-lg-10">
           <div class="bg-white p-4">
             
-            <div class="col-12 col-md-10 col-lg-9">
+            <div class="col-12 col-md-12 col-lg-12">
               <div class="contact-form">
                   <h4 style="text-align:center;">Add blog</h4>
                   <!-- Contact Form -->
                   <form class="form-group" action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    <div class="col-12 col-md-12 col-lg-12"> 
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">category</label>
+                    {% render_field form.category class="form-control" style="height: 50px;" placeholder="select category" %}
+                      </div>
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">title</label>
+                        {% render_field form.title class="form-control" %}
+                      </div>
 
-                    <label for="exampleInputEmail1">category</label>
-                    {% render_field form.category class="form-control" %}
-                    <br>
-                    <label for="exampleInputEmail1">title</label>
-                    {% render_field form.title class="form-control" %}
-                    <br>
+                    </div>
+                  </div><br>  
+            
 
-                      <label for="exampleInputEmail1">snipit</label>
-                    {% render_field form.snipit class="form-control" %}
-                    <br>
+                  <div class="col-12 col-md-12 col-lg-12"> 
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">snipit</label>
+                        {% render_field form.snipit class="form-control" %}
+                      </div>
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">image</label>
+                        {% render_field form.img class="form-control"%}
+                      </div>
 
-                    <label for="exampleInputEmail1">image</label>
-                    {% render_field form.img class="form-control"%}
-                    <br>
-                    <label for="exampleInputEmail1">alt</label>
-                    {% render_field form.img_alt class="form-control"%}
-                    <br>
+                    </div>
+                  </div><br>  
 
+                  <div class="col-12 col-md-12 col-lg-12"> 
                     <label for="exampleInputEmail1">description</label>
                     {% render_field form.description  class="form-control" id="summernote" %}
+                  </div>  <br>
 
-                    <br>
-                    <h5>----seo----</h5>
-                    <label for="exampleInputEmail1">blog seo title</label>
+                  <div class="col-12 col-md-12 col-lg-12"> 
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">image alt</label>
+                        {% render_field form.img_alt class="form-control"%}
+                      </div>
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">blog seo title</label>
                     {% render_field form.title_meta class="form-control" %}
-                    <br>
-                    <label for="exampleInputEmail1"> Seo description</label>
-                    {% render_field form.description_meta class="form-control" rows="2" %}
-                    <br>
-                    <label for="exampleInputEmail1">keywords</label>
+                      </div>
+
+                    </div>
+                  </div><br>  
+
+                  <div class="col-12 col-md-12 col-lg-12"> 
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1"> Seo description</label>
+                        {% render_field form.description_meta class="form-control" rows="2" %}
+                      </div>
+                      <div class="col-md-6">
+                        <label for="exampleInputEmail1">keywords</label>
                     {% render_field form.keywords_meta class="form-control" %}
-                    <br>
-
-                   
-
-
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-light bg-white" aria-label="Send Message">Add blog <i class="ti ti-brand-telegram ms-1"></i>
+                      </div>
+                    </div>
+                  </div><br>  
+                        
+                  {% comment %} button section {% endcomment %}
+                  <div class="col-12 col-md-12 col-lg-12"> 
+                    
+                      <button type="submit" class="btn btn-outline-dark btn-lg btn-block" aria-label="Send Message">Add blog <i class="ti ti-brand-telegram ms-1"></i>
                       </button>
                     </div>
+                    {% comment %} end button section {% endcomment %}
+                    
+                  
                   </form>
               </div>
 
