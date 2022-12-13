@@ -24,6 +24,6 @@ urlpatterns = [
     path('deleteblog/<int:id>',views.delete,name="delete"),
     path('add_blog/<int:id>', views.update, name="updateblog"),
     path('profile_update/<int:id>', views.profile_update, name="profile_update"),
-    path('sitemap.xml', sitemap, {'sitemaps': {'blog': BlogSiteMap}},
-         name='django.contrib.sitemaps.views.sitemap')
+    path('sitemap.xml', sitemap, {'sitemaps': {'blog': BlogSiteMap}},name='django.contrib.sitemaps.views.sitemap'),
+    path('tag/<slug:tag_slug>/', views.post_list, name='post_tag'),
 ]

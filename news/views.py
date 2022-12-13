@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Blog, Contact, BlogCategory,Subscribe
 from django.contrib.auth.models import User
@@ -9,10 +9,11 @@ from django.contrib.auth.decorators import login_required
 from django.apps import apps
 from .filters import *
 from django.core.paginator import Paginator
-from gtts import gTTS
+
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
+from taggit.models import Tag
 
 
 
@@ -29,8 +30,16 @@ def index(request):
     return render(request, 'main/index.html', {'blog': page_obj, 'blog_category': blog_category})
 
 
+
+
+
+
 def about(request):
     return render(request, 'main/about.html',)
+
+
+
+
 
 
 def contact(request):
@@ -48,15 +57,38 @@ def contact(request):
     return render(request, 'main/contact.html', context)
 
 
+
+
+
 # this is for blog details page
 def blog(request):
     blog = Blog.objects.filter().order_by('-created')
     return render(request, 'main/blog.html', {'blog': blog})
 
+
+
+
+
+
 def Blogdetails(request, url):
     blogdetail = Blog.objects.filter(blog_url=url)
     blog = Blog.objects.filter().order_by('-created')[:3]
     return render(request, 'main/blog-single.html', {'blogdata': blogdetail, 'blog': blog})
+
+
+def post_list(request, tag_slug=None):
+    posts = Blog.objects.all()
+    # post tag
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
+
+    return render(request, 'main/tag-single.html', {'posts': posts, 'tag': tag})
+
+
+
+
 
 
 def categories(request):

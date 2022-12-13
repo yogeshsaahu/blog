@@ -56,15 +56,18 @@
             
           </div>
           <div class="d-block d-sm-flex justify-content-between align-items-center mt-5 pt-3">
+
             <ul class="taxonomy-lists list-unstyled list-inline">
+
               <li class="list-inline-item d-block mb-3">Tags: </li>
+              {% for tag in data.tags.all%}
               <li class="list-inline-item">
-                <a class="bg-white" href="tag-single.html">Fitness</a>
+                <a class="bg-white" href="{% url 'post_tag' tag.slug %}">{{tag.name}}</a>
               </li>
-              <li class="list-inline-item">
-                <a class="bg-white" href="tag-single.html">Motivation</a>
-              </li>
+              {%endfor%}
             </ul>
+
+
             <ul class="list-inline social-share text-start text-sm-end mt-4 mt-sm-0">
               <li class="list-inline-item d-block mb-2 text-start">Share: </li>
               <li class="list-inline-item lead text-center is-hoverable">

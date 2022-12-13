@@ -1,11 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-# Create your models here.
+from taggit.managers import TaggableManager
 from PIL import Image
 from django.urls import reverse
-from gtts import gTTS
-from bs4 import BeautifulSoup
+
 
 # this modal for contact form
 class Contact(models.Model):
@@ -51,6 +50,7 @@ class Blog(models.Model):
       keywords_meta = models.CharField(max_length=75)
       music = models.FileField(upload_to='music',null=True, blank=True)
       created = models.DateTimeField(auto_now_add=True)
+      tags = TaggableManager()
 
 
       def save(self, *args, **kwargs):
