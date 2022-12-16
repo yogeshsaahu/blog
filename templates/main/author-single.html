@@ -47,25 +47,23 @@
           <div class="border-top"></div>
         </div>
       </div>
+     
+    </div>
+<div class="row align-items-center section-title">
+      <div class="col-12 text-center">
+        <h2 class="h3 mb-0 title">Posts by {{ a.user.username}}</h2>
+      </div>
       {% endfor %}
     </div>
-    {% comment %} <div class="row align-items-center section-title">
-      <div class="col-12 text-center">
-        <h2 class="h3 mb-0 title">Recent Posts</h2>
-      </div>
-    </div>
     <div class="row gy-5 gx-md-5">
+      {% for blog in blog %}
       <div class="col-lg-4 col-md-6">
         <article class="bg-white d-flex flex-column h-100">
-          <div class="post-image">
-            <a class="d-block" href="blog-single.html" title="Msoft's smart fabric that can detect objects and gestures">
-              <img loading="lazy" class="w-100 h-auto" src="assets/images/blog/04.webp" alt="Msoft's smart fabric that can detect objects and gestures" width="400" height="264">
-            </a>
-          </div>
+         
           <div class="p-4 ">
             <ul class="post-meta list-inline mb-3">
               <li class="list-inline-item">
-                <i class="ti ti-calendar-event me-1"></i>16th Nov, 2021
+                <i class="ti ti-calendar-event me-1"></i>{{blog.created|date}}
               </li>
               <li class="list-inline-item">•</li>
               <li class="list-inline-item">
@@ -74,66 +72,15 @@
             </ul>
             <div class="position-relative">
               <h3 class="h4 post-title mb-2 line-clamp clamp-2">
-                <a class="text-link stretched-link" href="blog-single.html" title="Read more about - Msoft's smart fabric that can detect objects and gestures">Msoft's smart fabric that can detect objects and gestures</a>
+                <a class="text-link stretched-link" href="{% url 'index' %}blog/{{blog.blog_url}}" title="{{blog.title}}">{{blog.title}}</a>
               </h3>
-              <p class="mb-0 line-clamp clamp-3">About eight or ten years ago, I was excited about smart fabric and connected textiles — especially about what the next generation could be once the materials evolved.</p>
+              <p class="mb-0 line-clamp clamp-3">{{blog.snipit}}</p>
             </div>
           </div>
         </article>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <article class="bg-white d-flex flex-column h-100">
-          <div class="post-image">
-            <a class="d-block" href="blog-single.html" title="The Power of Visualization in the 21st century">
-              <img loading="lazy" class="w-100 h-auto" src="assets/images/blog/09.webp" alt="The Power of Visualization in the 21st century" width="400" height="264">
-            </a>
-          </div>
-          <div class="p-4 ">
-            <ul class="post-meta list-inline mb-3">
-              <li class="list-inline-item">
-                <i class="ti ti-calendar-event me-1"></i>5th Dec, 2020
-              </li>
-              <li class="list-inline-item">•</li>
-              <li class="list-inline-item">
-                <i class="ti ti-clock-2 me-1"></i>02 min read
-              </li>
-            </ul>
-            <div class="position-relative">
-              <h3 class="h4 post-title mb-2 line-clamp clamp-2">
-                <a class="text-link stretched-link" href="blog-single.html" title="Read more about - The Power of Visualization in the 21st century">The Power of Visualization in the 21st century</a>
-              </h3>
-              <p class="mb-0 line-clamp clamp-3">While futurists and fundraisers used to make bullish predictions about artificial general intelligence, they’ve become quieter lately. Peter Thiel — the tech billionaire and rumored vampire — says Silicon Valley big brains have lost enthusiasm for AGI.</p>
-            </div>
-          </div>
-        </article>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <article class="bg-white d-flex flex-column h-100">
-          <div class="post-image">
-            <a class="d-block" href="blog-single.html" title="Yes, your company can trademark a color — here’s how">
-              <img loading="lazy" class="w-100 h-auto" src="assets/images/blog/01.webp" alt="Yes, your company can trademark a color — here’s how" width="400" height="264">
-            </a>
-          </div>
-          <div class="p-4 ">
-            <ul class="post-meta list-inline mb-3">
-              <li class="list-inline-item">
-                <i class="ti ti-calendar-event me-1"></i>25th Jun, 2020
-              </li>
-              <li class="list-inline-item">•</li>
-              <li class="list-inline-item">
-                <i class="ti ti-clock-2 me-1"></i>02 min read
-              </li>
-            </ul>
-            <div class="position-relative">
-              <h3 class="h4 post-title mb-2 line-clamp clamp-2">
-                <a class="text-link stretched-link" href="blog-single.html" title="Read more about - Yes, your company can trademark a color — here’s how">Yes, your company can trademark a color — here’s how</a>
-              </h3>
-              <p class="mb-0 line-clamp clamp-3">According to research up to 90% of consumers’ snap judgments made about products can be based on color alone. Color also plays an important role in brand identity.</p>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div> {% endcomment %}
+      </div>{% endfor %}
+     
+    </div> 
   </div>
 </section>
 <!-- start of author single -->

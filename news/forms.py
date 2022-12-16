@@ -2,6 +2,7 @@ from django import forms
 from .models import Contact, Blog, BlogCategory
 from django.forms import ModelForm
 from django.apps import apps
+from taggit.forms import *
 
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
 
@@ -22,10 +23,13 @@ class BlogForm(ModelForm):
 
 
 
+
+
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = BlogCategory
-        fields =  ('category', )
+        fields = ('category',)
+
 
 
 

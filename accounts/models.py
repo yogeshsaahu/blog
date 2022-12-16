@@ -10,7 +10,7 @@ class UserProfileInfo(models.Model):
 
     skills = models.CharField(max_length=100, blank=True)
     bio = models.CharField(max_length=400, blank=True)
-    profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
+    profile_pic = ResizedImageField(size=[500, 500],crop=['middle', 'center'], upload_to='profile_pics')
 
     def __str__(self):
         return self.user.username

@@ -4,7 +4,7 @@ from django.template.defaultfilters import slugify
 from taggit.managers import TaggableManager
 from PIL import Image
 from django.urls import reverse
-
+from django_resized import ResizedImageField
 
 # this modal for contact form
 class Contact(models.Model):
@@ -16,6 +16,9 @@ class Contact(models.Model):
 
       def __str__(self):
             return self.name
+
+
+
 
 # this modal for blog categorys form
 class BlogCategory(models.Model):
@@ -35,12 +38,15 @@ class BlogCategory(models.Model):
             return self.category
 
 
+
+
+
 # this modal for blog form
 class Blog(models.Model):
       category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE)
       snipit = models.CharField(max_length=50)
       title = models.CharField(max_length=100)
-      img = models.ImageField(upload_to='pics')
+      img = ResizedImageField(size=[1020, 660], upload_to='pics')
       img_alt = models.CharField(max_length=100)
       description = models.TextField()
       blog_url = models.SlugField(max_length=100)
@@ -60,29 +66,33 @@ class Blog(models.Model):
 
                   super(Blog, self).save(*args, **kwargs)
 
-      def image(self, *args, **kwargs):
-            super().save(*args, **kwargs)
-            img = Image.open(self.img.path)
-
-            if img.height > 100 or img.weight > 100:
-                  output_size = (100,100)
-                  img.thumbnail(output_size)
-                  img.save(self.img.path)
+      # def image(self, *args, **kwargs):
+      #       super().save(*args, **kwargs)
+      #       img = Image.open(self.img.path)
+      #
+      #       if img.height > 100 or img.weight > 100:
+      #             output_size = (100,100)
+      #             img.thumbnail(output_size)
+      #             img.save(self.img.path)
 
       def get_absolute_url(self):
             # return "/p/%i/" % self.id
             return reverse("Blogdetails", kwargs={"blog_url": str(self.blog_url)})
 
-
-
       def __str__(self):
             return self.title
+
+
+
+
+
 
 
 class Subscribe(models.Model):
 
       name = models.CharField(max_length=50)
       email = models.EmailField(max_length=100, unique=True)
+
 
       def __str__(self):
             return self.name

@@ -17,10 +17,10 @@ def register(request):
 
         if password == password2:
             if User.objects.filter(username=username).exists():
-                messages.info(request, 'Username Taken')
+                messages.info(request, 'Username Taken. use different username')
                 return redirect('register')
             elif User.objects.filter(email=email).exists():
-                messages.info(request, 'email Taken')
+                messages.info(request, 'email Taken. use different email ')
                 return redirect('register')
             else:
                 user = User.objects.create_user(username=username, password=password, email=email,
@@ -54,10 +54,7 @@ def login(request):
         else:
             messages.info(request, 'invalid credentials')
             return redirect('login')
-
     else:
-
-
         return render(request, 'main/login.html')
 
 

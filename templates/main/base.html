@@ -179,60 +179,9 @@
   <div class="mt-4 pt-2 is-hidden popular-topics">
     <div class="post-meta">
       <div class="section-title mb-3">
-        <p class="title h4 mb-0">Popular topics</p>
+        <p class="title h4 mb-0">search bar</p>
       </div>
-      <ul class="taxonomy-lists list-inline">
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Lifestyle</a>
-        </li>
-        
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Motivation</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">AI</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Art</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Business</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Culture</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Earth</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Fitness</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Futurism</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Health</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Innovation</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Job</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Modern Art</a>
-        </li>
-        <li class="list-inline-item me-2 mt-2">
-          <a class="bg-white" href="tag-single.html">Nature</a>
-        </li>
-        <li class="list-inline-item mt-2">
-          <a class="border-0 pe-0 d-inline-flex align-items-center" href="tags.html"> All Topice <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <polyline points="9 6 15 12 9 18"></polyline>
-            </svg>
-          </a>
-        </li>
-      </ul>
+
     </div>
   </div>
 <br>
@@ -310,23 +259,26 @@
           <div class="col-xl-4 col-lg-5 col-md-6">
             <div class="ps-0 ps-xl-4">
               <div id="mc_embed_signup">
-                <form action="https://gmail.us20.list-manage.com/subscribe/post?u=92641572a6c6ec43da15feed0&amp;amp;id=d28bb2454f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+
+
+
+                <form action="subscribe" method="post">
+                  {% csrf_token %}
                   <div id="mc_embed_signup_scroll" class="input-group">
-                    <input type="text" value="" name="NAME" class="form-control w-100" id="mce-NAME" placeholder="Full Name" aria-label="Name" autocomplete="new-name">
-                    <input type="email" value="" name="EMAIL" class="form-control w-100 required email" id="mce-EMAIL" placeholder="Your email address *" aria-label="Subscription" autocomplete="new-email" required>
-                    <div id="mce-responses" class="clear">
-                      <div class="response" id="mce-error-response" style="display:none"></div>
-                      <div class="response" id="mce-success-response" style="display:none"></div>
-                    </div>
-                    <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                      <input type="text" name="b_92641572a6c6ec43da15feed0_d28bb2454f" tabindex="-1" value="">
-                    </div>
+                    <input type="text" value="" name="name" class="form-control w-100"  placeholder="Full Name" aria-label="Name" autocomplete="new-name">
+                    <input type="email" value="" name="email" class="form-control w-100 required email" placeholder="Your email address *" aria-label="Subscription" autocomplete="new-email" required>
+                    
+                    
                     <div class="input-group-append w-100">
-                      <button type="submit" name="subscribe" id="mc-embedded-subscribe" class="input-group-text w-100 mb-0" aria-label="Subscription Button"> Subscribe Now <i class="ti ti-arrow-up-right ms-auto"></i>
+                      <button type="submit" name="subscribe"  class="input-group-text w-100 mb-0" aria-label="Subscription Button"> Subscribe Now <i class="ti ti-arrow-up-right ms-auto"></i>
                       </button>
                     </div>
                   </div>
                 </form>
+
+
+
+
               </div>
             </div>
           </div>
@@ -343,13 +295,13 @@
         <div class="col-lg-4 text-center text-lg-start">
           <ul class="list-inline footer-menu">
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#!"><i class="ti ti-rss"></i> RSS </a>
+              <a class="text-link" href={% url 'contact' %}><i class="ti ti-rss"></i> contact </a>
             </li>
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#!">SiteMap</a>
+              <a class="text-link" href="{% url 'index' %}sitemap.xml">SiteMap</a>
             </li>
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#"> Privacy </a>
+              <a class="text-link" href="{% url 'Privacy' %}"> Privacy </a>
             </li>
           </ul>
         </div>

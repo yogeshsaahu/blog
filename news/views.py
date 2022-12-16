@@ -1,17 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Blog, Contact, BlogCategory,Subscribe
-from django.contrib.auth.models import User
 from django.apps import apps
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
-from .forms import ContactForm, BlogForm, forms,UserProfileInfoForm
+from .forms import ContactForm, BlogForm,UserProfileInfoForm
 from django.contrib.auth.decorators import login_required
 from django.apps import apps
 from .filters import *
 from django.core.paginator import Paginator
-
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
-from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from taggit.models import Tag
 
@@ -38,7 +34,8 @@ def about(request):
     return render(request, 'main/about.html',)
 
 
-
+def Privacy(request):
+    return render(request, 'main/Privacy.html',)
 
 
 
@@ -76,6 +73,9 @@ def Blogdetails(request, url):
     return render(request, 'main/blog-single.html', {'blogdata': blogdetail, 'blog': blog})
 
 
+
+
+
 def post_list(request, tag_slug=None):
     posts = Blog.objects.all()
     # post tag
@@ -97,6 +97,9 @@ def categories(request):
 
 
 
+
+
+
 def category_details(request, url):
     category = BlogCategory.objects.filter(slug=url)
     cat = BlogCategory.objects.filter(slug=url).values_list('id', flat=True)
@@ -111,6 +114,10 @@ def category_details(request, url):
     return render(request, 'main/category-single.html', context)
 # admin for users
 
+
+
+
+
 @login_required(login_url="/accounts/login")
 def profile(request):
     data = MyModel1.objects.filter(user=request.user).first()
@@ -119,7 +126,9 @@ def profile(request):
 
         form = UserProfileInfoForm(request.POST, request.FILES, instance=data)
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
             return redirect('profile')
 
 
@@ -130,32 +139,20 @@ def profile(request):
     instance = Blog.objects.filter(author=request.user).order_by('-created')
     return render(request, 'main/profile.html', { 'form': form, 'instance': instance , 'count': blog_count })
 
+
+
+
+
+
 @login_required(login_url="/accounts/login")
 def add_blog(request):
     if request.method == 'POST':
-
         form = BlogForm(request.POST, request.FILES)
-        title = request.POST['title']
-        des = request.POST['description']
-        des = BeautifulSoup(des)
-        t = des.getText()
-        print(t)
-
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author = request.user
-
-
-
-            mytexts = (f' blog title is {title} and details is {t}')
-            print(mytexts)
-
-
-            language = 'en'
-            myobj = gTTS(text=mytexts, lang=language, slow=False)
-            music = myobj.save(f'media/audio/{title}.mp3')
-
             instance.save()
+            form.save_m2m()
             messages.info(request, 'blog uploaded')
             return redirect('profile')
 
@@ -164,6 +161,7 @@ def add_blog(request):
     return render(request, 'main/add_blog.html', {'form': form, 'instance': instance})
 
 # for delete blog posts
+@login_required(login_url="/accounts/login")
 def delete(request, id):
     data = Blog.objects.get(id=id)
     data.delete()
@@ -171,6 +169,7 @@ def delete(request, id):
     return redirect('/profile')
 
 # for delete blog posts
+@login_required(login_url="/accounts/login")
 def update(request, id):
     data = Blog.objects.get(id=id)
 
@@ -204,7 +203,7 @@ def search(request):
 
 
 
-
+@login_required(login_url="/accounts/login")
 def profile_update(request, id):
     data = MyModel1.objects.filter(id=id).first()
     print(data)
@@ -220,29 +219,40 @@ def profile_update(request, id):
         form = UserProfileInfoForm(instance=data)
     return render(request, 'profile.html', {'form': form})
 
+
 def author(request):
     author = MyModel1.objects.all()
     return render(request, 'main/authors.html', {'author': author})
 
+
+
 def author_details(request, id):
     author_data = MyModel1.objects.filter(id=id)
-    return render(request, 'main/author-single.html', {'author_data': author_data})
+    cat = MyModel1.objects.filter(id=id).values_list('id', flat=True)
+
+    cate = list(cat)
+    data = cate[0]
+    blog = Blog.objects.filter(author_id=data).order_by('-created')[:10]
+    context = {'author_data': author_data, 'blog': blog}
+    return render(request, 'main/author-single.html', context)
 
 
-
+"""this is for subscribe """
 def subscribe(request):
 
     if request.method == 'POST':
+        name = request.POST['name']
+
 
         email = request.POST['email']
-
         if Subscribe.objects.filter(email=email).exists():
-            messages.info('this email in already register')
+            messages.info(request,'this email in already register')
+            return redirect('index')
 
         else:
-            data = Subscribe.objects.create(email=email)
+            data = Subscribe.objects.create(email=email, name=name)
             data.save()
-            messages.info('submit successfully')
+            messages.info(request,'submit successfully')
             return redirect('index')
 
 
