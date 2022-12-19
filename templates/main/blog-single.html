@@ -22,7 +22,7 @@
       {% for data in blogdata%}
       <div class="col-xl-9 col-lg-10">
         <div class="section">
-          <p class="mb-4 text-muted"> 03 min reading in <span class="mx-2">—</span>
+          <p class="mb-4 text-muted"> {{data.reading_time}} min reading in <span class="mx-2">—</span>
             <a class="text-link " href="{% url 'index' %}category/{{data.category.slug}}">{{ data.category }}</a>
           </p>
           <h1 class="mb-3">{{data.title}}</h1>
@@ -109,7 +109,7 @@
                     </li>
                     <li class="list-inline-item">•</li>
                     <li class="list-inline-item">
-                      <i class="ti ti-clock-2 me-1"></i>02 min read
+                      <i class="ti ti-clock-2 me-1"></i>{{b.reading_time}} min read
                     </li>
                   </ul>
                   <div class="position-relative">

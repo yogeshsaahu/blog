@@ -49,6 +49,7 @@ class Blog(models.Model):
       img = ResizedImageField(size=[1020, 660], upload_to='pics')
       img_alt = models.CharField(max_length=100)
       description = models.TextField()
+      reading_time = models.IntegerField(default=2)
       blog_url = models.SlugField(max_length=100)
       author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
       title_meta = models.CharField(max_length=100)

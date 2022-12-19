@@ -18,7 +18,7 @@ class BlogForm(ModelForm):
 
     class Meta:
         model = Blog
-        fields = ('category', 'title','snipit', 'img','img_alt', 'description','title_meta','description_meta','keywords_meta')
+        fields = ('category', 'title','snipit', 'img','img_alt', 'description','title_meta','description_meta','keywords_meta','reading_time')
         exclude = ('author', 'blog_url')
 
 

@@ -10,7 +10,7 @@ from django.core.paginator import Paginator
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
 from django.http import JsonResponse
 from taggit.models import Tag
-
+from django.db.models import Count
 
 
 
@@ -93,6 +93,9 @@ def post_list(request, tag_slug=None):
 
 def categories(request):
     cat_data = BlogCategory.objects.filter().order_by('-created')
+    categories = Blog.objects.all().annotate(posts_count=Count('category_id'))
+    for category in categories:
+        print(category.posts_count)
     return render(request, 'main/categories.html', { 'categories': cat_data})
 
 
