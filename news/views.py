@@ -12,10 +12,9 @@ from django.http import JsonResponse
 from taggit.models import Tag
 from django.db.models import Count
 
-
-
 # Create your views here.
 
+"""this is for index page """
 def index(request):
     blog = Blog.objects.filter().order_by('-created')
     paginator = Paginator(blog, 6)
@@ -27,46 +26,35 @@ def index(request):
 
 
 
-
-
-
+"""this is for about page """
 def about(request):
     return render(request, 'main/about.html',)
 
-
+"""this is for Privacy page """
 def Privacy(request):
     return render(request, 'main/Privacy.html',)
 
-
-
+"""this is for contact page """
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-
             form.save()
             return redirect('index')
         else:
             messages.info(request, 'fill valid data')
     form = ContactForm()
     context = {'form': form}
-
     return render(request, 'main/contact.html', context)
 
 
 
-
-
-# this is for blog details page
+"""this is for blog page """
 def blog(request):
     blog = Blog.objects.filter().order_by('-created')
     return render(request, 'main/blog.html', {'blog': blog})
 
-
-
-
-
-
+"""this is for blog details page """
 def Blogdetails(request, url):
     blogdetail = Blog.objects.filter(blog_url=url)
     blog = Blog.objects.filter().order_by('-created')[:3]
@@ -74,79 +62,137 @@ def Blogdetails(request, url):
 
 
 
-
-
+"""this is for tag page """
 def post_list(request, tag_slug=None):
     posts = Blog.objects.all()
-    # post tag
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         posts = posts.filter(tags__in=[tag])
-
     return render(request, 'main/tag-single.html', {'posts': posts, 'tag': tag})
 
 
 
 
-
-
+"""this is for category page """
 def categories(request):
-    cat_data = BlogCategory.objects.filter().order_by('-created')
-    categories = Blog.objects.all().annotate(posts_count=Count('category_id'))
-    for category in categories:
-        print(category.posts_count)
-    return render(request, 'main/categories.html', { 'categories': cat_data})
+    # cat_data = BlogCategory.objects.filter().order_by('-created')
+    count = BlogCategory.objects.annotate(num_comments=models.Count('blog')).all().order_by('-created')
+    return render(request, 'main/categories.html', { "count": count})
 
-
-
-
-
-
+"""this is for category details page """
 def category_details(request, url):
     category = BlogCategory.objects.filter(slug=url)
     cat = BlogCategory.objects.filter(slug=url).values_list('id', flat=True)
-
     cate = list(cat)
     data = cate[0]
-
     blog = Blog.objects.filter(category_id=data).order_by('-created')[:10]
-    # print('catdata',cat)
     context = {'category': category, 'blog': blog}
-
     return render(request, 'main/category-single.html', context)
-# admin for users
 
 
 
 
+""" this search bar based on api  """
+def search(request):
+    address = request.GET.get('address')
+    payload = []
+    if address:
+        data = Blog.objects.filter(title__icontains=address)
+        for data in data:
+            payload.append(data.blog_url)
+    return JsonResponse({'status': 200, 'data': payload})
 
+
+
+
+"""this is for author page """
+def author(request):
+    author = MyModel1.objects.all()
+    return render(request, 'main/authors.html', {'author': author})
+
+"""this is for author details page """
+def author_details(request, id):
+    author_data = MyModel1.objects.filter(id=id)
+    cat = MyModel1.objects.filter(id=id).values_list('id', flat=True)
+    cate = list(cat)
+    data = cate[0]
+    blog = Blog.objects.filter(author_id=data).order_by('-created')[:10]
+    context = {'author_data': author_data, 'blog': blog}
+    return render(request, 'main/author-single.html', context)
+
+
+
+
+"""this is for subscribe """
+def subscribe(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        if Subscribe.objects.filter(email=email).exists():
+            messages.info(request,'this email in already register')
+            return redirect('index')
+        else:
+            data = Subscribe.objects.create(email=email, name=name)
+            data.save()
+            messages.info(request,'submit successfully')
+            return redirect('index')
+
+
+
+
+"""this is for 404 page """
+def error_404_view(request, exception):
+    return render(request, 'main/404.html')
+
+
+
+# ''''''''''''''''''''''''''''user_admin''''''''''''''''''''''''''''''''''
+
+
+
+"""this is for show user dashboard page """
+def user_dashboard(request):
+    return render(request, "admin/dashboard.html")
+
+
+"""this is for show user profile page """
 @login_required(login_url="/accounts/login")
-def profile(request):
+def user_profile(request):
     data = MyModel1.objects.filter(user=request.user).first()
 
     if request.method == 'POST':
-
         form = UserProfileInfoForm(request.POST, request.FILES, instance=data)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.user = request.user
             instance.save()
-            return redirect('profile')
-
-
+            return redirect('user_profile')
 
     form = UserProfileInfoForm(instance=data)
-    # form = BlogForm()
     blog_count = Blog.objects.filter(author=request.user).count()
-    instance = Blog.objects.filter(author=request.user).order_by('-created')
-    return render(request, 'main/profile.html', { 'form': form, 'instance': instance , 'count': blog_count })
 
 
+    return render(request, 'admin/user_profile.html', {'form': form, "blog_count": blog_count})
 
 
+"""this is for update user profile page """
+@login_required(login_url="/accounts/login")
+def profile_update(request, id):
+    data = MyModel1.objects.filter(id=id).first()
+
+    if request.method == 'POST':
+
+        form = UserProfileInfoForm(request.POST, request.FILES, instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('user_profile')
+    else:
+        form = UserProfileInfoForm(instance=data)
+    return render(request, 'admin/user_profile.html', {'form': form})
 
 
+"""this function for add new blog"""
 @login_required(login_url="/accounts/login")
 def add_blog(request):
     if request.method == 'POST':
@@ -157,21 +203,32 @@ def add_blog(request):
             instance.save()
             form.save_m2m()
             messages.info(request, 'blog uploaded')
-            return redirect('profile')
+            return redirect('user_blogs')
 
     form = BlogForm()
     instance = Blog.objects.filter(author=request.user).order_by('-created')
-    return render(request, 'main/add_blog.html', {'form': form, 'instance': instance})
+    return render(request, 'admin/add_blog.html', {'form': form, 'instance': instance})
 
-# for delete blog posts
+
+"""this function for show user blogs"""
+@login_required(login_url="/accounts/login")
+def user_blogs(request):
+    blog = Blog.objects.filter(author=request.user).order_by('-created')
+    blog_count = Blog.objects.filter(author=request.user).count()
+    return render(request, "admin/blog_list.html", {"blog": blog, "blog_count": blog_count})
+
+
+
+"""this function for delete blog"""
 @login_required(login_url="/accounts/login")
 def delete(request, id):
     data = Blog.objects.get(id=id)
     data.delete()
     messages.info(request, 'blog deleted successfully')
-    return redirect('/profile')
+    return redirect('user_blogs')
 
-# for delete blog posts
+
+"""this function for update blog"""
 @login_required(login_url="/accounts/login")
 def update(request, id):
     data = Blog.objects.get(id=id)
@@ -181,86 +238,8 @@ def update(request, id):
         form = BlogForm(request.POST, request.FILES, instance=data)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('user_blogs')
 
     else:
         form = BlogForm(instance=data)
-    return render(request, 'main/add_blog.html', {'form': form})
-
-
-""" this search bar based on api  """
-def search(request):
-    address = request.GET.get('address')
-
-    payload = []
-    if address:
-        data = Blog.objects.filter(title__icontains=address)
-
-
-        for data in data:
-            payload.append(data.blog_url)
-
-    return JsonResponse({'status': 200, 'data': payload})
-
-
-
-
-
-@login_required(login_url="/accounts/login")
-def profile_update(request, id):
-    data = MyModel1.objects.filter(id=id).first()
-    print(data)
-
-    if request.method == 'POST':
-
-        form = UserProfileInfoForm(request.POST, request.FILES, instance=data)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-
-    else:
-        form = UserProfileInfoForm(instance=data)
-    return render(request, 'profile.html', {'form': form})
-
-
-def author(request):
-    author = MyModel1.objects.all()
-    return render(request, 'main/authors.html', {'author': author})
-
-
-
-def author_details(request, id):
-    author_data = MyModel1.objects.filter(id=id)
-    cat = MyModel1.objects.filter(id=id).values_list('id', flat=True)
-
-    cate = list(cat)
-    data = cate[0]
-    blog = Blog.objects.filter(author_id=data).order_by('-created')[:10]
-    context = {'author_data': author_data, 'blog': blog}
-    return render(request, 'main/author-single.html', context)
-
-
-"""this is for subscribe """
-def subscribe(request):
-
-    if request.method == 'POST':
-        name = request.POST['name']
-
-
-        email = request.POST['email']
-        if Subscribe.objects.filter(email=email).exists():
-            messages.info(request,'this email in already register')
-            return redirect('index')
-
-        else:
-            data = Subscribe.objects.create(email=email, name=name)
-            data.save()
-            messages.info(request,'submit successfully')
-            return redirect('index')
-
-
-"""this is for 404 page """
-def error_404_view(request, exception):
-    return render(request, 'main/404.html')
-
-
+    return render(request, 'admin/add_blog.html', {'form': form})

@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from taggit.managers import TaggableManager
-from PIL import Image
 from django.urls import reverse
 from django_resized import ResizedImageField
+from autoslug import AutoSlugField
+
 
 # this modal for contact form
 class Contact(models.Model):
@@ -23,9 +24,8 @@ class Contact(models.Model):
 # this modal for blog categorys form
 class BlogCategory(models.Model):
       category = models.CharField(max_length=50)
-      # category_img = models.ImageField(upload_to='pics')
       category_details = models.CharField(max_length=250, blank=True)
-      slug = models.SlugField(max_length=100)
+      slug = AutoSlugField(populate_from='category')
       created = models.DateTimeField(auto_now_add=True)
 
       def save(self, *args, **kwargs):
@@ -46,11 +46,12 @@ class Blog(models.Model):
       category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE)
       snipit = models.CharField(max_length=50)
       title = models.CharField(max_length=100)
-      img = ResizedImageField(size=[1020, 660], upload_to='pics')
-      img_alt = models.CharField(max_length=100)
+      img_opt = models.BooleanField()
+      img = ResizedImageField(size=[1020, 660], upload_to='pics',blank=True,null=True)
+      img_alt = models.CharField(max_length=100, blank=True,null=True)
       description = models.TextField()
       reading_time = models.IntegerField(default=2)
-      blog_url = models.SlugField(max_length=100)
+      blog_url = AutoSlugField(populate_from='title')
       author = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
       title_meta = models.CharField(max_length=100)
       description_meta = models.CharField(max_length=500)
@@ -60,21 +61,14 @@ class Blog(models.Model):
       tags = TaggableManager()
 
 
-      def save(self, *args, **kwargs):
-            if not self.id:
-                  # Newly created object, so set slug
-                  self.blog_url = slugify(self.title)
-
-                  super(Blog, self).save(*args, **kwargs)
-
-      # def image(self, *args, **kwargs):
-      #       super().save(*args, **kwargs)
-      #       img = Image.open(self.img.path)
+      # def save(self, *args, **kwargs):
+      #       if not self.id:
+      #             # Newly created object, so set slug
+      #             self.blog_url = slugify(self.title)
       #
-      #       if img.height > 100 or img.weight > 100:
-      #             output_size = (100,100)
-      #             img.thumbnail(output_size)
-      #             img.save(self.img.path)
+      #             super(Blog, self).save(*args, **kwargs)
+
+
 
       def get_absolute_url(self):
             # return "/p/%i/" % self.id

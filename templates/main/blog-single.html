@@ -27,10 +27,8 @@
           </p>
           <h1 class="mb-3">{{data.title}}</h1>
           
-          {% comment %}  {% endcomment %}
 
 
-{% comment %}  {% endcomment %}
 
 
           <p class="mb-4 pb-1">{{data.snipit}}</p>
@@ -47,8 +45,11 @@
         </div>
       </div> 
       <div class="col-lg-10">
-        <img loading="lazy" class="w-100 h-auto" src="{{data.img.url}}" alt="Can You Build Muscle When You’re Older?" width="1020" height="660">
+        {% if data.img_opt == True %}
+        <img loading="lazy" class="w-100 h-auto" src="{{data.img.url}}" alt="{{data.title}}" width="1020" height="660">
+        {% endif %}
       </div>
+
       <div class="col-xl-9 col-lg-10">
         <div class="section">
           <div class="content">

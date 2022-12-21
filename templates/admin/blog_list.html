@@ -1,0 +1,66 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% static "img" as baseUrl %}
+{% block content %}
+
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <div class="row">
+                    <div class="col-lg-6 col-ml-12">
+                        <div class="row">
+                            <!-- Textual inputs start -->
+                            <div class="col-12 mt-5">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">blog list</h4>
+                                        <div class="single-table">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover progress-table text-center">
+                                                    <thead class="text-uppercase">
+                                                        <tr>
+                                                            <th scope="col">Title</th>
+                                                            <th scope="col">Description</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">image</th>
+                                                            <th scope="col">slug</th>
+                                                            <th scope="col">action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for data in blog%}
+                                                        <tr>
+                                                            <th scope="row">{{data.title|truncatewords:2}}</th>
+                                                            <td>{{data.snipit | truncatewords:2}}</td>
+                                                            <td>{{data.created}}</td>
+                                                            <td> <img src="{{data.img.url}}" alt="" style="width: 20%"
+                                                              /></td>
+                                                            <td>{{data.blog_url}}</td>
+                                                            <td>
+                                                                <ul class="d-flex justify-content-center">
+                                                                    <li class="mr-3"><a href="add_blog/{{data.id}}" class="text-secondary"><i class="fa fa-edit"></i></a></li>
+                                                                    <li><a href="deleteblog/{{data.id}}" class="text-danger"><i class="ti-trash"></i></a></li>
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                           
+                            
+                           
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        {% endblock %}  

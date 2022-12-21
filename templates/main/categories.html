@@ -44,12 +44,12 @@
           <div class="tab-pane show active" id="alphabetical-tab-pane" role="tabpanel" aria-labelledby="alphabetical-tab" tabindex="0">
             <div class="row g-2 taxonomy-lists">
 
-              {% for cat in categories%}
+              {% for cat in count %}
               <div class="col-md-4 col-6">
                 <a class="text-dark px-3 py-2 d-flex lead bg-white" href="/category/{{cat.slug}}">
                   <div class="flex-grow-1">
                     <span class="sort-alphabetical">{{cat.category}} </span>
-                    <small class="sort-popular"></small>
+                    <small class="sort-popular">({{cat.num_comments}})</small>
                   </div>
                   <div class="flex-shrink-0 ms-2 icon">
                     <i class="ti ti-arrow-right opacity-25 small"></i>

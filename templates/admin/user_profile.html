@@ -1,0 +1,81 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% static "img" as baseUrl %}
+{% block content %}
+{% load widget_tweaks %} 
+{% static "profile_pic" as baseUrl %}
+
+            <!-- page title area end -->
+            <div class="main-content-inner">
+                <div class="row">
+                    <div class="col-lg-12 mt-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="invoice-area">
+                                    <div class="invoice-head">
+                                        <div class="row">
+                                            <div class="iv-left col-6">
+                                                <span>Welcome {{user.username}}</span>
+                                            </div>
+                                            <div class="iv-right col-6 text-md-right">
+                                                <span>Total blogs {{blog_count}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+
+                                        <div class="col-md-6">
+                                            <img src="{{user.userprofileinfo.profile_pic.url}}" class="img-circle" alt="" width="200" height="200">
+                                        </div>
+                                        <div class="col-md-6 text-md-right">
+                                            <div class="invoice-address">
+                                                <h3>{{ user.username}}</h3>
+                                                <h5>{{ user.userprofileinfo.skills}}</h5>
+                                                <p> {{ user.userprofileinfo.bio}}</p>
+                                                <p>Last login -{{user.last_login}}</p>
+                                                
+                                                
+                                            </div>                                          
+                                        </div>
+                                    </div>                                                                                                                                                                                                                                               
+                                </div>
+                               
+                            </div>                           
+                        </div>
+                         <br>
+                         <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">update profile</h4>
+                            <form action="" method="post"enctype="multipart/form-data">
+                                <div class="form-row align-items-center">
+                                    {% csrf_token %}
+                                    <div class="col-sm-6 my-1">
+                                        <label for="example-text-input" class="col-form-label">skills</label>
+                                        {% render_field form.skills class="form-control" placeholder="skills" %}
+                                    </div>
+                                    <div class="col-sm-6 my-1">
+                                        <label for="example-text-input" class="col-form-label">bio</label>
+                                        {% render_field form.bio class="form-control" placeholder="bio" %}
+                                    </div>
+                                    <div class="col-sm-12 my-1">
+                                        <label for="example-text-input" class="col-form-label">profile image</label>
+                                        {% render_field form.profile_pic class="form-control" %}
+                                    </div>
+                                    
+                                   
+                                    <div class="col-sm-6 my-1 ">
+                                        <button type="submit" class="btn btn-success mb-3">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+
+        {% endblock %}    
