@@ -49,7 +49,7 @@ def login(request):
         if user is not None:
             messages.info(request, 'you are login successfully')
             auth.login(request, user)
-            return redirect('profile')
+            return redirect('user_dashboard')
 
         else:
             messages.info(request, 'invalid credentials')

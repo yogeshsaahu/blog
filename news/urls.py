@@ -28,13 +28,13 @@ urlpatterns = [
         template_name="main/robots.txt", content_type="text/plain")),
 
 #     user dashboarduser_blogs
-    path('user_dashboard', views.user_dashboard, name='user_dashboard'),
-    path('user_dashboard/add_blog', views.add_blog, name='add_blog'),
-    path('user_dashboard/deleteblog/<int:id>',views.delete,name="delete"),
-    path('user_dashboard/add_blog/<int:id>', views.update, name="updateblog"),
-    path('user_dashboard/user_profile', views.user_profile, name='user_profile'),
-    path('user_dashboard/profile_update/<int:id>', views.profile_update, name="profile_update"),
-    path('user_dashboard/user_blogs', views.user_blogs, name='user_blogs'),
+#     path('user_dashboard', views.user_dashboard, name='user_dashboard'),
+#     path('user_dashboard/add_blog', views.add_blog, name='add_blog'),
+#     path('user_dashboard/deleteblog/<int:id>',views.delete,name="delete"),
+#     path('user_dashboard/add_blog/<int:id>', views.update, name="updateblog"),
+#     path('user_dashboard/user_profile', views.user_profile, name='user_profile'),
+#     path('user_dashboard/profile_update/<int:id>', views.profile_update, name="profile_update"),
+#     path('user_dashboard/user_blogs', views.user_blogs, name='user_blogs'),
 
 
 

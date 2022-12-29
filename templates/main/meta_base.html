@@ -36,7 +36,8 @@
   <link rel="stylesheet" href=" {% static 'assets/css/style.css' %}">
   
 
-
+ <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/styles/atom-one-dark.min.css">
   
 
 </head>
@@ -78,65 +79,29 @@
                 <a class="nav-link" href="{% url 'index' %}">Home</a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link" href="{% url 'categories' %}">Categories</a>
+                <a class="nav-link" href="{% url 'categories' %}">Tutorials</a>
               </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
-              </li>
-
-              {% if user.is_authenticated %}
-              <li class="nav-item ">hello {{ user.first_name}}</li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'user_dashboard' %}">Dashboard</a>
-              </li>
-
-              {% else %}  
-                         
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'register' %}">Register</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'login' %}">Login</a>
-              </li>
-              {% endif %}
-              {% comment %} <li class="nav-item dropdown">
+             
+            
+             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="authors.html">Authors</a>
+                    <a class="dropdown-item" href="{% url 'blog' %}">Blogs</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="author-single.html">Author Single</a>
+                    <a class="dropdown-item" href="{% url 'about' %}">About</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="tags.html">Tags</a>
+                    <a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="tag-single.html">Tag Single</a>
+                    <a class="dropdown-item" href="{% url 'Privacy' %}">Privacy-Policy</a>
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="categories.html">Categories</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="category-single.html">Category Single</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="elements.html">Elements</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="privacy.html">Privacy Policy</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="404.html">Page Not Found</a>
-                  </li>
+                 
+                 
                 </ul>
-              </li> {% endcomment %}
+              </li> 
             </ul>
             <div class="navbar-right d-none d-lg-block">
               
@@ -298,13 +263,13 @@
         <div class="col-lg-4 text-center text-lg-start">
           <ul class="list-inline footer-menu">
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#!"><i class="ti ti-rss"></i> RSS </a>
+              <a class="text-link" href={% url 'contact' %}></i> contact </a>
             </li>
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#!">SiteMap</a>
+              <a class="text-link" href="{% url 'index' %}sitemap.xml">SiteMap</a>
             </li>
             <li class="list-inline-item m-0">
-              <a class="text-link" href="#"> Privacy </a>
+              <a class="text-link" href="{% url 'Privacy' %}"> Privacy </a>
             </li>
           </ul>
         </div>
@@ -329,8 +294,8 @@
               </a>
             </li>
             <li class="list-inline-item ms-3 lead text-center">
-              <a class="is-hoverable" target="_blank" href="#" title="Facebook">
-                <i class="ti ti-brand-facebook"></i>
+              <a class="is-hoverable" target="_blank" href="#" title="github">
+                <i class="ti ti-brand-github"></i>
               </a>
             </li>
           </ul>
@@ -351,6 +316,13 @@
   
   <!-- Main Script -->
   <script src="{% static 'assets/js/script.js' %}"></script>
+
+ <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.7.0/build/highlight.min.js"></script>
+  <script>
+  hljs.initHighlighting.called = false;
+    hljs.initHighlighting();
+
+  </script>
 
   </body>
   </html>

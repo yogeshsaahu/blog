@@ -10,9 +10,9 @@ from django.core.paginator import Paginator
 MyModel1 = apps.get_model('accounts', 'UserProfileInfo')
 from django.http import JsonResponse
 from taggit.models import Tag
-from django.db.models import Count
 
-# Create your views here.
+
+
 
 """this is for index page """
 def index(request):
@@ -152,8 +152,9 @@ def error_404_view(request, exception):
 
 
 """this is for show user dashboard page """
+@login_required(login_url="/accounts/login")
 def user_dashboard(request):
-    return render(request, "admin/dashboard.html")
+    return render(request, "user_dash/dashboard.html")
 
 
 """this is for show user profile page """
@@ -173,7 +174,7 @@ def user_profile(request):
     blog_count = Blog.objects.filter(author=request.user).count()
 
 
-    return render(request, 'admin/user_profile.html', {'form': form, "blog_count": blog_count})
+    return render(request, 'user_dash/user_profile.html', {'form': form, "blog_count": blog_count})
 
 
 """this is for update user profile page """
@@ -189,7 +190,7 @@ def profile_update(request, id):
             return redirect('user_profile')
     else:
         form = UserProfileInfoForm(instance=data)
-    return render(request, 'admin/user_profile.html', {'form': form})
+    return render(request, 'user_dash/user_profile.html', {'form': form})
 
 
 """this function for add new blog"""
@@ -207,7 +208,7 @@ def add_blog(request):
 
     form = BlogForm()
     instance = Blog.objects.filter(author=request.user).order_by('-created')
-    return render(request, 'admin/add_blog.html', {'form': form, 'instance': instance})
+    return render(request, 'user_dash/add_blog.html', {'form': form, 'instance': instance})
 
 
 """this function for show user blogs"""
@@ -215,7 +216,7 @@ def add_blog(request):
 def user_blogs(request):
     blog = Blog.objects.filter(author=request.user).order_by('-created')
     blog_count = Blog.objects.filter(author=request.user).count()
-    return render(request, "admin/blog_list.html", {"blog": blog, "blog_count": blog_count})
+    return render(request, "user_dash/blog_list.html", {"blog": blog, "blog_count": blog_count})
 
 
 
@@ -242,4 +243,4 @@ def update(request, id):
 
     else:
         form = BlogForm(instance=data)
-    return render(request, 'admin/add_blog.html', {'form': form})
+    return render(request, 'user_dash/add_blog.html', {'form': form})
